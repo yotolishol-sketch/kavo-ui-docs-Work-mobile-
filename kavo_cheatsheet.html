@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kavo UI — Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0d0f14;
+    --surface:   #13161e;
+    --card:      #181c26;
+    --border:    #252a38;
+    --accent:    #1abf9e;
+    --accent2:   #6c8ef7;
+    --warn:      #f7a26c;
+    --text:      #e8eaf0;
+    --muted:     #6b7394;
+    --code-bg:   #0a0c11;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── grid noise overlay ── */
+  body::before {
+    content:'';
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(rgba(26,191,158,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,191,158,.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+
+  /* ── header ── */
+  header { margin-bottom: 52px; }
+  .logo-row { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+  .logo-dot {
+    width:10px; height:10px; border-radius:50%;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+  }
+  h1 {
+    font-size: clamp(28px,5vw,46px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .url-pill {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    background: rgba(108,142,247,.1);
+    border: 1px solid rgba(108,142,247,.25);
+    border-radius: 6px;
+    padding: 5px 12px;
+    word-break: break-all;
+  }
+
+  /* ── section headings ── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 48px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content:''; flex:1; height:1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── card ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: rgba(26,191,158,.3); }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-head .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(26,191,158,.12);
+    color: var(--accent);
+    border: 1px solid rgba(26,191,158,.2);
+    flex-shrink: 0;
+  }
+  .card-head .tag.blue {
+    background: rgba(108,142,247,.12);
+    color: var(--accent2);
+    border-color: rgba(108,142,247,.2);
+  }
+  .card-head .tag.orange {
+    background: rgba(247,162,108,.12);
+    color: var(--warn);
+    border-color: rgba(247,162,108,.2);
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .card-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* ── code block ── */
+  pre {
+    background: var(--code-bg);
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    overflow-x: auto;
+    position: relative;
+  }
+  pre code { color: var(--text); }
+
+  /* syntax colours */
+  .kw  { color: #c792ea; }   /* keyword */
+  .fn  { color: #82aaff; }   /* function / method */
+  .str { color: #c3e88d; }   /* string */
+  .num { color: #f78c6c; }   /* number */
+  .cmt { color: #546e7a; font-style:italic; }  /* comment */
+  .acc { color: #1abf9e; }   /* accent — lib names */
+  .var { color: #ffcb6b; }   /* variable */
+
+  /* copy button */
+  .copy-btn {
+    position: absolute;
+    top: 10px; right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(26,191,158,.1);
+    color: var(--accent);
+    border: 1px solid rgba(26,191,158,.25);
+    border-radius: 5px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+    user-select: none;
+  }
+  .copy-btn:hover { background: rgba(26,191,158,.22); }
+  .copy-btn.copied { color: #fff; background: var(--accent); border-color: var(--accent); }
+
+  /* ── themes grid ── */
+  .themes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 18px;
+  }
+  .theme-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .theme-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+  /* ── params table ── */
+  .params { padding: 14px 18px; display:flex; flex-wrap:wrap; gap:8px; }
+  .param {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .param b { color: var(--text); }
+  .param em { color: var(--accent2); font-style:normal; }
+
+  /* ── footer ── */
+  footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-row">
+      <div class="logo-dot"></div>
+      <h1>Kavo <span>UI</span> Library</h1>
+    </div>
+    <p class="subtitle">Cheat sheet — copy-paste ready snippets for every component</p>
+    <div class="url-pill">https://raw.githubusercontent.com/yotolishol-sketch/Ui-library-Kavo-.../source.lua.txt</div>
+  </header>
+
+  <!-- ══ SETUP ══ -->
+  <div class="section-title">Setup</div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">loadstring</span>
+      <span class="card-title">Load the Library</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">Library</span> = <span class="fn">loadstring</span>(<span class="acc">game</span>:<span class="fn">HttpGet</span>(
+    <span class="str">"https://raw.githubusercontent.com/yotolishol-sketch/Ui-library-Kavo-/502f4b61c3a14f1d0e49738c0ff532a9e077662d/source.lua.txt"</span>
+))()</code></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">window</span>
+      <span class="card-title">Create Window</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">Window</span> = <span class="var">Library</span>.<span class="fn">CreateLib</span>(<span class="str">"My Script"</span>, <span class="str">"Midnight"</span>)</code></pre>
+  </div>
+
+  <!-- ══ THEMES ══ -->
+  <div class="section-title">Themes</div>
+
+  <div class="card">
+    <div class="themes-grid">
+      <div class="theme-chip"><div class="theme-dot" style="background:#1abf9e"></div>Midnight</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#404040"></div>DarkTheme</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#969696"></div>LightTheme</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#e31b1b"></div>BloodTheme</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#a647d6"></div>GrapeTheme</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#564cfb"></div>Ocean</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#e62345"></div>Sentinel</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#00a63a"></div>Serpent</div>
+      <div class="theme-chip"><div class="theme-dot" style="background:#2e302b"></div>Synapse</div>
+    </div>
+  </div>
+
+  <!-- ══ STRUCTURE ══ -->
+  <div class="section-title">Structure</div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">tab</span>
+      <span class="card-title">New Tab</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">Tab</span> = <span class="var">Window</span>:<span class="fn">NewTab</span>(<span class="str">"Tab Name"</span>)</code></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">section</span>
+      <span class="card-title">New Section</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">Section</span> = <span class="var">Tab</span>:<span class="fn">NewSection</span>(<span class="str">"Section Name"</span>)</code></pre>
+  </div>
+
+  <!-- ══ COMPONENTS ══ -->
+  <div class="section-title">Components</div>
+
+  <!-- Label -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">label</span>
+      <span class="card-title">Label</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">myLabel</span> = <span class="var">Section</span>:<span class="fn">NewLabel</span>(<span class="str">"Hello World"</span>)
+
+<span class="cmt">-- update later:</span>
+<span class="var">myLabel</span>:<span class="fn">UpdateLabel</span>(<span class="str">"New Text"</span>)</code></pre>
+  </div>
+
+  <!-- Button -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">button</span>
+      <span class="card-title">Button</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>callback</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">myButton</span> = <span class="var">Section</span>:<span class="fn">NewButton</span>(<span class="str">"Click Me"</span>, <span class="str">"Does something"</span>, <span class="kw">function</span>()
+    <span class="fn">print</span>(<span class="str">"Clicked!"</span>)
+<span class="kw">end</span>)
+
+<span class="cmt">-- update label:</span>
+<span class="var">myButton</span>:<span class="fn">UpdateButton</span>(<span class="str">"New Label"</span>)</code></pre>
+  </div>
+
+  <!-- Toggle -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">toggle</span>
+      <span class="card-title">Toggle</span>
+      <span class="card-note orange" style="color:var(--warn);font-size:11px;">⚠ Do NOT call UpdateToggle in a loop</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>callback(state)</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="var">Section</span>:<span class="fn">NewToggle</span>(<span class="str">"Speed Hack"</span>, <span class="str">"Toggle walk speed"</span>, <span class="kw">function</span>(<span class="var">state</span>)
+    <span class="kw">local</span> <span class="var">hum</span> = <span class="acc">game</span>.Players.LocalPlayer.Character
+        <span class="kw">and</span> <span class="acc">game</span>.Players.LocalPlayer.Character:<span class="fn">FindFirstChild</span>(<span class="str">"Humanoid"</span>)
+    <span class="kw">if</span> <span class="var">hum</span> <span class="kw">then</span> <span class="var">hum</span>.WalkSpeed = <span class="var">state</span> <span class="kw">and</span> <span class="num">64</span> <span class="kw">or</span> <span class="num">16</span> <span class="kw">end</span>
+<span class="kw">end</span>)</code></pre>
+  </div>
+
+  <!-- Slider -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">slider</span>
+      <span class="card-title">Slider</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>max</b> <em>number</em></span>
+      <span class="param"><b>min</b> <em>number</em></span>
+      <span class="param"><b>callback(value)</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="var">Section</span>:<span class="fn">NewSlider</span>(<span class="str">"Walk Speed"</span>, <span class="str">"Set walk speed"</span>, <span class="num">200</span>, <span class="num">16</span>, <span class="kw">function</span>(<span class="var">v</span>)
+    <span class="acc">game</span>.Players.LocalPlayer.Character.Humanoid.WalkSpeed = <span class="var">v</span>
+<span class="kw">end</span>)</code></pre>
+  </div>
+
+  <!-- Textbox -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">textbox</span>
+      <span class="card-title">TextBox</span>
+      <span class="card-note">fires on Enter</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>callback(txt)</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="var">Section</span>:<span class="fn">NewTextBox</span>(<span class="str">"Player Name"</span>, <span class="str">"Type and press Enter"</span>, <span class="kw">function</span>(<span class="var">txt</span>)
+    <span class="fn">print</span>(<span class="str">"Got:"</span>, <span class="var">txt</span>)
+<span class="kw">end</span>)</code></pre>
+  </div>
+
+  <!-- Keybind -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag blue">keybind</span>
+      <span class="card-title">Keybind</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>key</b> <em>Enum.KeyCode</em></span>
+      <span class="param"><b>callback</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="var">Section</span>:<span class="fn">NewKeybind</span>(<span class="str">"Toggle UI"</span>, <span class="str">"Hide or show"</span>, <span class="acc">Enum</span>.KeyCode.RightShift, <span class="kw">function</span>()
+    <span class="var">Library</span>:<span class="fn">ToggleUI</span>()
+<span class="kw">end</span>)</code></pre>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag blue">dropdown</span>
+      <span class="card-title">Dropdown + Refresh</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>list</b> <em>table</em></span>
+      <span class="param"><b>callback(option)</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">myDrop</span> = <span class="var">Section</span>:<span class="fn">NewDropdown</span>(<span class="str">"Mode"</span>, <span class="str">"Pick one"</span>, {<span class="str">"A"</span>, <span class="str">"B"</span>, <span class="str">"C"</span>}, <span class="kw">function</span>(<span class="var">opt</span>)
+    <span class="fn">print</span>(<span class="str">"Selected:"</span>, <span class="var">opt</span>)
+<span class="kw">end</span>)
+
+<span class="cmt">-- swap list at runtime:</span>
+<span class="var">myDrop</span>:<span class="fn">Refresh</span>({<span class="str">"X"</span>, <span class="str">"Y"</span>, <span class="str">"Z"</span>})</code></pre>
+  </div>
+
+  <!-- ColorPicker -->
+  <div class="card">
+    <div class="card-head">
+      <span class="tag orange">colorpicker</span>
+      <span class="card-title">Color Picker</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>text</b> <em>string</em></span>
+      <span class="param"><b>info</b> <em>string</em></span>
+      <span class="param"><b>default</b> <em>Color3</em></span>
+      <span class="param"><b>callback(color)</b> <em>function</em></span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="var">Section</span>:<span class="fn">NewColorPicker</span>(<span class="str">"Beam Color"</span>, <span class="str">"Pick a color"</span>, <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">255</span>,<span class="num">0</span>,<span class="num">0</span>), <span class="kw">function</span>(<span class="var">c</span>)
+    <span class="fn">print</span>(<span class="str">"Color:"</span>, <span class="var">c</span>)
+<span class="kw">end</span>)</code></pre>
+  </div>
+
+  <!-- ══ THEME CHANGING ══ -->
+  <div class="section-title">Theme Changing</div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag orange">ChangeColor</span>
+      <span class="card-title">Change one color key at runtime</span>
+    </div>
+    <div class="params">
+      <span class="param"><b>key</b>: SchemeColor</span>
+      <span class="param"><b>key</b>: Background</span>
+      <span class="param"><b>key</b>: Header</span>
+      <span class="param"><b>key</b>: TextColor</span>
+      <span class="param"><b>key</b>: ElementColor</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="var">Library</span>:<span class="fn">ChangeColor</span>(<span class="str">"SchemeColor"</span>, <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">255</span>,<span class="num">100</span>,<span class="num">0</span>))</code></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag orange">custom theme</span>
+      <span class="card-title">Full Custom Theme at CreateLib</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">myTheme</span> = {
+    SchemeColor  = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">0</span>, <span class="num">255</span>, <span class="num">200</span>),
+    Background   = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">10</span>, <span class="num">10</span>, <span class="num">15</span>),
+    Header       = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">5</span>,  <span class="num">5</span>,  <span class="num">10</span>),
+    TextColor    = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">255</span>, <span class="num">255</span>, <span class="num">255</span>),
+    ElementColor = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">20</span>, <span class="num">20</span>, <span class="num">28</span>),
+}
+<span class="kw">local</span> <span class="var">Window</span> = <span class="var">Library</span>.<span class="fn">CreateLib</span>(<span class="str">"My Script"</span>, <span class="var">myTheme</span>)</code></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag orange">color pickers</span>
+      <span class="card-title">Full Live Theme Editor (loop)</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="kw">local</span> <span class="var">myTheme</span> = {
+    SchemeColor  = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">26</span>, <span class="num">189</span>, <span class="num">158</span>),
+    Background   = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">44</span>, <span class="num">62</span>,  <span class="num">82</span>),
+    Header       = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">57</span>, <span class="num">81</span>,  <span class="num">105</span>),
+    TextColor    = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">255</span>, <span class="num">255</span>, <span class="num">255</span>),
+    ElementColor = <span class="acc">Color3</span>.<span class="fn">fromRGB</span>(<span class="num">52</span>, <span class="num">74</span>,  <span class="num">95</span>),
+}
+<span class="kw">for</span> <span class="var">key</span>, <span class="var">color</span> <span class="kw">in</span> <span class="fn">pairs</span>(<span class="var">myTheme</span>) <span class="kw">do</span>
+    <span class="var">Section</span>:<span class="fn">NewColorPicker</span>(<span class="var">key</span>, <span class="str">"Change "</span>..<span class="var">key</span>, <span class="var">color</span>, <span class="kw">function</span>(<span class="var">c</span>)
+        <span class="var">Library</span>:<span class="fn">ChangeColor</span>(<span class="var">key</span>, <span class="var">c</span>)
+    <span class="kw">end</span>)
+<span class="kw">end</span></code></pre>
+  </div>
+
+  <!-- ══ FULL TEMPLATE ══ -->
+  <div class="section-title">Full Script Template</div>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="tag">template</span>
+      <span class="card-title">Copy-paste starter script</span>
+    </div>
+    <pre><button class="copy-btn">Copy</button><code><span class="cmt">-- Load library</span>
+<span class="kw">local</span> <span class="var">Library</span> = <span class="fn">loadstring</span>(<span class="acc">game</span>:<span class="fn">HttpGet</span>(
+    <span class="str">"https://raw.githubusercontent.com/yotolishol-sketch/Ui-library-Kavo-/502f4b61c3a14f1d0e49738c0ff532a9e077662d/source.lua.txt"</span>
+))()
+
+<span class="cmt">-- Create window</span>
+<span class="kw">local</span> <span class="var">Window</span> = <span class="var">Library</span>.<span class="fn">CreateLib</span>(<span class="str">"My Script"</span>, <span class="str">"Midnight"</span>)
+
+<span class="cmt">-- Tab + Section</span>
+<span class="kw">local</span> <span class="var">Tab</span>     = <span class="var">Window</span>:<span class="fn">NewTab</span>(<span class="str">"Main"</span>)
+<span class="kw">local</span> <span class="var">Section</span> = <span class="var">Tab</span>:<span class="fn">NewSection</span>(<span class="str">"General"</span>)
+
+<span class="cmt">-- Label</span>
+<span class="var">Section</span>:<span class="fn">NewLabel</span>(<span class="str">"Welcome!"</span>)
+
+<span class="cmt">-- Button</span>
+<span class="var">Section</span>:<span class="fn">NewButton</span>(<span class="str">"Do Something"</span>, <span class="str">"Press to run"</span>, <span class="kw">function</span>()
+    <span class="fn">print</span>(<span class="str">"Button pressed"</span>)
+<span class="kw">end</span>)
+
+<span class="cmt">-- Toggle</span>
+<span class="var">Section</span>:<span class="fn">NewToggle</span>(<span class="str">"Speed Hack"</span>, <span class="str">"Toggle speed"</span>, <span class="kw">function</span>(<span class="var">state</span>)
+    <span class="kw">local</span> <span class="var">hum</span> = <span class="acc">game</span>.Players.LocalPlayer.Character
+        <span class="kw">and</span> <span class="acc">game</span>.Players.LocalPlayer.Character:<span class="fn">FindFirstChild</span>(<span class="str">"Humanoid"</span>)
+    <span class="kw">if</span> <span class="var">hum</span> <span class="kw">then</span> <span class="var">hum</span>.WalkSpeed = <span class="var">state</span> <span class="kw">and</span> <span class="num">64</span> <span class="kw">or</span> <span class="num">16</span> <span class="kw">end</span>
+<span class="kw">end</span>)
+
+<span class="cmt">-- Slider</span>
+<span class="var">Section</span>:<span class="fn">NewSlider</span>(<span class="str">"Walk Speed"</span>, <span class="str">"Adjust speed"</span>, <span class="num">200</span>, <span class="num">16</span>, <span class="kw">function</span>(<span class="var">v</span>)
+    <span class="acc">game</span>.Players.LocalPlayer.Character.Humanoid.WalkSpeed = <span class="var">v</span>
+<span class="kw">end</span>)
+
+<span class="cmt">-- Keybind to hide/show UI</span>
+<span class="var">Section</span>:<span class="fn">NewKeybind</span>(<span class="str">"Toggle UI"</span>, <span class="str">"RightShift"</span>, <span class="acc">Enum</span>.KeyCode.RightShift, <span class="kw">function</span>()
+    <span class="var">Library</span>:<span class="fn">ToggleUI</span>()
+<span class="kw">end</span>)</code></pre>
+  </div>
+
+  <footer>Kavo UI Library — cheat sheet for local script use in Roblox</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pre = btn.closest('pre');
+      // get plain text without the button text
+      const code = pre.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1800);
+      });
+    });
+  });
+</script>
+</body>
+</html>
