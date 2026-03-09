@@ -453,7 +453,7 @@ function Library.new(config)
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = ScreenGui
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-	MainFrame.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+	MainFrame.BackgroundColor3 = Color3.fromRGB(13, 13, 16)
 	MainFrame.BackgroundTransparency = 1
 	MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	MainFrame.BorderSizePixel = 0
@@ -481,8 +481,40 @@ function Library.new(config)
 
 	WindowTable.ElBlurUI = ElBlurSource.new(MainFrame);
 
-	UICorner.CornerRadius = UDim.new(0, 7)
+	UICorner.CornerRadius = UDim.new(0, 16)
 	UICorner.Parent = MainFrame
+
+	-- ขอบเรืองรัศมี
+	local MainStroke = Instance.new("UIStroke")
+	MainStroke.Color = Color3.fromRGB(255, 255, 255)
+	MainStroke.Transparency = 0.88
+	MainStroke.Thickness = 1.5
+	MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	MainStroke.Parent = MainFrame
+
+	-- เส้น gradient ด้านบน (top highlight line)
+	local TopHighlight = Instance.new("Frame")
+	TopHighlight.Name = "TopHighlight"
+	TopHighlight.Parent = MainFrame
+	TopHighlight.AnchorPoint = Vector2.new(0.5, 0)
+	TopHighlight.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TopHighlight.BackgroundTransparency = 0.7
+	TopHighlight.BorderSizePixel = 0
+	TopHighlight.Position = UDim2.new(0.5, 0, 0, 0)
+	TopHighlight.Size = UDim2.new(0.6, 0, 0, 1)
+	TopHighlight.ZIndex = 20
+	local THCorner = Instance.new("UICorner")
+	THCorner.CornerRadius = UDim.new(1, 0)
+	THCorner.Parent = TopHighlight
+	local THGrad = Instance.new("UIGradient")
+	THGrad.Transparency = NumberSequence.new{
+		NumberSequenceKeypoint.new(0, 1),
+		NumberSequenceKeypoint.new(0.2, 0),
+		NumberSequenceKeypoint.new(0.8, 0),
+		NumberSequenceKeypoint.new(1, 1)
+	}
+	THGrad.Parent = TopHighlight
+	onAccent(function(c) TopHighlight.BackgroundColor3 = c end)
 
 	MainDropShadow.Name = "MainDropShadow"
 	MainDropShadow.Parent = MainFrame
@@ -490,7 +522,7 @@ function Library.new(config)
 	MainDropShadow.BackgroundTransparency = 1.000
 	MainDropShadow.BorderSizePixel = 0
 	MainDropShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
-	MainDropShadow.Size = UDim2.new(1, 47, 1, 47)
+	MainDropShadow.Size = UDim2.new(1, 80, 1, 80)
 	MainDropShadow.ZIndex = 0
 	MainDropShadow.Image = "rbxassetid://6015897843"
 	MainDropShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
@@ -499,11 +531,11 @@ function Library.new(config)
 	MainDropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
 	MainDropShadow.Rotation = 0.0001;
 	
-	Twen:Create(MainDropShadow,TweenInfo2,{ImageTransparency = 0.6}):Play();
+	Twen:Create(MainDropShadow,TweenInfo2,{ImageTransparency = 0.35}):Play();
 
 	Headers.Name = "Headers"
 	Headers.Parent = MainFrame
-	Headers.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	Headers.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
 	Headers.BackgroundTransparency = 1
 	Headers.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Headers.BorderSizePixel = 0
@@ -532,7 +564,15 @@ function Library.new(config)
 
 	UICorner_2.CornerRadius = UDim.new(0, 15)
 	UICorner_2.Parent = Headers
-	Twen:Create(UICorner_2,TweenInfo2,{CornerRadius = UDim.new(0, 4)}):Play();
+	Twen:Create(UICorner_2,TweenInfo2,{CornerRadius = UDim.new(0, 12)}):Play();
+
+	local HeaderStroke = Instance.new("UIStroke")
+	HeaderStroke.Color = Color3.fromRGB(255, 255, 255)
+	HeaderStroke.Transparency = 0.84
+	HeaderStroke.Thickness = 1
+	HeaderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	HeaderStroke.Parent = Headers
+	onAccent(function(c) HeaderStroke.Color = c end)
 
 	Title.Name = "Title"
 	Title.Parent = MainFrame
@@ -589,7 +629,8 @@ function Library.new(config)
 	BlockFrame1.Position = UDim2.new(0.317000002, 0, 0.5, 0)
 	BlockFrame1.Size = UDim2.new(0, 1, 1, 0)
 	BlockFrame1.ZIndex = 3
-	Twen:Create(BlockFrame1,TweenInfo2,{BackgroundTransparency = 0.8}):Play();
+	Twen:Create(BlockFrame1,TweenInfo2,{BackgroundTransparency = 0.75}):Play();
+	onAccent(function(c) BlockFrame1.BackgroundColor3 = c end)
 
 	UICorner_3.CornerRadius = UDim.new(0.5, 0)
 	UICorner_3.Parent = BlockFrame1
@@ -608,7 +649,8 @@ function Library.new(config)
 	BlockFrame3.Position = UDim2.new(0.317000061, 0, 0.120060779, 0)
 	BlockFrame3.Size = UDim2.new(0.682999969, 0, 0, 1)
 	BlockFrame3.ZIndex = 3
-	Twen:Create(BlockFrame3,TweenInfo2,{BackgroundTransparency = 0.8}):Play();
+	Twen:Create(BlockFrame3,TweenInfo2,{BackgroundTransparency = 0.75}):Play();
+	onAccent(function(c) BlockFrame3.BackgroundColor3 = c end)
 
 	UICorner_4.CornerRadius = UDim.new(0.5, 0)
 	UICorner_4.Parent = BlockFrame3
@@ -626,7 +668,8 @@ function Library.new(config)
 	BlockFrame2.Position = UDim2.new(-0.00100000005, 0, 0.204999998, 0)
 	BlockFrame2.Size = UDim2.new(0.318471342, 0, 0, 1)
 	BlockFrame2.ZIndex = 3
-	Twen:Create(BlockFrame2,TweenInfo2,{BackgroundTransparency = 0.8}):Play();
+	Twen:Create(BlockFrame2,TweenInfo2,{BackgroundTransparency = 0.75}):Play();
+	onAccent(function(c) BlockFrame2.BackgroundColor3 = c end)
 
 	UICorner_5.CornerRadius = UDim.new(0.5, 0)
 	UICorner_5.Parent = BlockFrame2
@@ -638,7 +681,7 @@ function Library.new(config)
 	TabButtonFrame.Name = "TabButtonFrame"
 	TabButtonFrame.Parent = MainFrame
 	TabButtonFrame.AnchorPoint = Vector2.new(0.5, 0)
-	TabButtonFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	TabButtonFrame.BackgroundColor3 = Color3.fromRGB(16, 16, 20)
 	TabButtonFrame.BackgroundTransparency = 1
 	TabButtonFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	TabButtonFrame.BorderSizePixel = 0
@@ -647,8 +690,15 @@ function Library.new(config)
 	TabButtonFrame.Size = UDim2.new(0.300000012, 0, 0.774999976, 0)
 	Twen:Create(TabButtonFrame,TweenInfo2,{BackgroundTransparency = 0.5}):Play();
 
-	UICorner_6.CornerRadius = UDim.new(0, 3)
+	UICorner_6.CornerRadius = UDim.new(0, 12)
 	UICorner_6.Parent = TabButtonFrame
+
+	local TabPanelStroke = Instance.new("UIStroke")
+	TabPanelStroke.Color = Color3.fromRGB(255, 255, 255)
+	TabPanelStroke.Transparency = 0.91
+	TabPanelStroke.Thickness = 1
+	TabPanelStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	TabPanelStroke.Parent = TabButtonFrame
 
 	TabButtons.Name = "TabButtons"
 	TabButtons.Parent = TabButtonFrame
@@ -668,12 +718,12 @@ function Library.new(config)
 	UIListLayout.Parent = TabButtons
 	UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout.Padding = UDim.new(0, 3)
+	UIListLayout.Padding = UDim.new(0, 5)
 
 	MainTabFrame.Name = "MainTabFrame"
 	MainTabFrame.Parent = MainFrame
 	MainTabFrame.AnchorPoint = Vector2.new(0.5, 0)
-	MainTabFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+	MainTabFrame.BackgroundColor3 = Color3.fromRGB(16, 16, 20)
 	MainTabFrame.BackgroundTransparency = 1
 	MainTabFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	MainTabFrame.BorderSizePixel = 0
@@ -682,8 +732,15 @@ function Library.new(config)
 	MainTabFrame.Size = UDim2.new(0.670000017, 0, 0.860000014, 0)
 	Twen:Create(MainTabFrame,TweenInfo2,{BackgroundTransparency = 0.5}):Play();
 
-	UICorner_7.CornerRadius = UDim.new(0, 3)
+	UICorner_7.CornerRadius = UDim.new(0, 12)
 	UICorner_7.Parent = MainTabFrame
+
+	local ContentStroke = Instance.new("UIStroke")
+	ContentStroke.Color = Color3.fromRGB(255, 255, 255)
+	ContentStroke.Transparency = 0.91
+	ContentStroke.Thickness = 1
+	ContentStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	ContentStroke.Parent = MainTabFrame
 
 	InputFrame.Name = "InputFrame"
 	InputFrame.Parent = MainFrame
@@ -714,7 +771,7 @@ function Library.new(config)
 
 		DropdownFrame.Name = "DropdownFrame"
 		DropdownFrame.Parent = ScreenGui
-		DropdownFrame.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+		DropdownFrame.BackgroundColor3 = Color3.fromRGB(13, 13, 16)
 		DropdownFrame.BackgroundTransparency = 0.500
 		DropdownFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		DropdownFrame.BorderSizePixel = 0
@@ -723,7 +780,7 @@ function Library.new(config)
 		DropdownFrame.ZIndex = 100
 		DropdownFrame.Visible = false;
 
-		UICorner.CornerRadius = UDim.new(0, 4)
+		UICorner.CornerRadius = UDim.new(0, 12)
 		UICorner.Parent = DropdownFrame
 
 		MiniDropShadow.Name = "MiniDropShadow"
@@ -740,7 +797,8 @@ function Library.new(config)
 		MiniDropShadow.ScaleType = Enum.ScaleType.Slice
 		MiniDropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
 
-		UIStroke.Transparency = 0.900
+		UIStroke.Transparency = 0.80
+
 		UIStroke.Color = Color3.fromRGB(255, 255, 255)
 		UIStroke.Parent = DropdownFrame
 
@@ -871,7 +929,7 @@ function Library.new(config)
 			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			Frame.BorderSizePixel = 0
 			Frame.Position = UDim2.new(1.02499998, 0, 0.5, 0)
-			Frame.Size = UDim2.new(0.0549999997, 0, 0.699999988, 0)
+			Frame.Size = UDim2.new(0.03, 0, 0.55, 0)
 			Frame.ZIndex = 104
 
 			UICorner_2.CornerRadius = UDim.new(0, 3)
@@ -1100,13 +1158,13 @@ function Library.new(config)
 		TabButton.ClipsDescendants = true
 		TabButton.Size = UDim2.new(0.970000029, 0, 0.5, 0)
 		TabButton.ZIndex = 5
-		Twen:Create(TabButton,TweenInfo2,{BackgroundTransparency = 0.750}):Play();
+		Twen:Create(TabButton,TweenInfo2,{BackgroundTransparency = 0.80}):Play();
 
 		UIAspectRatioConstraint.Parent = TabButton
 		UIAspectRatioConstraint.AspectRatio = 4.250
 		UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 
-		UICorner.CornerRadius = UDim.new(0, 3)
+		UICorner.CornerRadius = UDim.new(0, 10)
 		UICorner.Parent = TabButton
 
 		Icon.Name = "Icon"
@@ -1186,7 +1244,7 @@ function Library.new(config)
 		Frame.ZIndex = 6
 		Twen:Create(Frame,TweenInfo2,{BackgroundTransparency = 0.1}):Play();
 
-		UICorner_3.CornerRadius = UDim.new(0, 3)
+		UICorner_3.CornerRadius = UDim.new(1, 0)
 		UICorner_3.Parent = Frame
 
 		UIGradient_4.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.84, 0.25), NumberSequenceKeypoint.new(1.00, 1.00)}
@@ -1356,7 +1414,7 @@ function Library.new(config)
 
 			Section.Name = "Section"
 			Section.Parent = (c_o_n_f_i_g.Position == "Left" and LeftFrame) or RightFrame;
-			Section.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+			Section.BackgroundColor3 = Color3.fromRGB(10, 10, 14)
 			Section.BackgroundTransparency = 1
 			Section.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			Section.BorderSizePixel = 0
@@ -1364,12 +1422,12 @@ function Library.new(config)
 			Section.ClipsDescendants = true;
 			Twen:Create(Section,TweenInfo1,{BackgroundTransparency = 0.75}):Play();
 
-			UICorner.CornerRadius = UDim.new(0, 3)
+			UICorner.CornerRadius = UDim.new(0, 12)
 			UICorner.Parent = Section
 
 			Header.Name = "Header"
 			Header.Parent = Section
-			Header.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+			Header.BackgroundColor3 = Color3.fromRGB(8, 8, 12)
 			Header.BackgroundTransparency = 0.900
 			Header.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			Header.BorderSizePixel = 0
@@ -1380,7 +1438,7 @@ function Library.new(config)
 			UIAspectRatioConstraint.AspectRatio = 8.000
 			UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 
-			UICorner_2.CornerRadius = UDim.new(0, 3)
+			UICorner_2.CornerRadius = UDim.new(0, 10)
 			UICorner_2.Parent = Header
 
 			Icon.Name = "Icon"
@@ -1455,7 +1513,7 @@ function Library.new(config)
 			SectionAutoUI.Parent = Section
 			SectionAutoUI.HorizontalAlignment = Enum.HorizontalAlignment.Center
 			SectionAutoUI.SortOrder = Enum.SortOrder.LayoutOrder
-			SectionAutoUI.Padding = UDim.new(0, 3)
+			SectionAutoUI.Padding = UDim.new(0, 6)
 
 			SectionAutoUI:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				Twen:Create(Section,TweenInfo.new(0.1),{
@@ -1466,7 +1524,8 @@ function Library.new(config)
 			UIStroke.Transparency = 1
 			UIStroke.Color = Color3.fromRGB(255, 255, 255)
 			UIStroke.Parent = Section
-			Twen:Create(UIStroke,TweenInfo1,{Transparency = 0.9}):Play();
+			Twen:Create(UIStroke,TweenInfo1,{Transparency = 0.86}):Play();
+			onAccent(function(c) UIStroke.Color = c end)
 
 			UIGradient_4.Rotation = 90
 			UIGradient_4.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.17, 1.00), NumberSequenceKeypoint.new(0.82, 1.00), NumberSequenceKeypoint.new(1.00, 0.00)}
@@ -1494,7 +1553,7 @@ function Library.new(config)
 
 				FunctionToggle.Name = "FunctionToggle"
 				FunctionToggle.Parent = Section
-				FunctionToggle.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+				FunctionToggle.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
 				FunctionToggle.BackgroundTransparency = 1
 				FunctionToggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				FunctionToggle.BorderSizePixel = 0
@@ -1543,14 +1602,14 @@ function Library.new(config)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
 
-				UIStroke.Transparency = 0.950
+				UIStroke.Transparency = 0.88
 				UIStroke.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke.Parent = FunctionToggle
 
 				System.Name = "System"
 				System.Parent = FunctionToggle
 				System.AnchorPoint = Vector2.new(1, 0.5)
-				System.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+				System.BackgroundColor3 = Color3.fromRGB(8, 8, 12)
 				System.BackgroundTransparency = 1.000
 				System.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				System.BorderSizePixel = 0
@@ -1561,7 +1620,7 @@ function Library.new(config)
 				UICorner.CornerRadius = UDim.new(0.5, 0)
 				UICorner.Parent = System
 
-				UIStroke_2.Transparency = 0.850
+				UIStroke_2.Transparency = 0.80
 				UIStroke_2.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke_2.Parent = System
 
@@ -1580,7 +1639,7 @@ function Library.new(config)
 				UICorner_2.CornerRadius = UDim.new(1, 0)
 				UICorner_2.Parent = Icon
 
-				UICorner_3.CornerRadius = UDim.new(0, 2)
+				UICorner_3.CornerRadius = UDim.new(0, 10)
 				UICorner_3.Parent = FunctionToggle
 
 				-- เปลี่ยนสี toggle dot ตาม accent
@@ -1595,9 +1654,9 @@ function Library.new(config)
 							TextTransparency = 0.02
 						}):Play()
 
-						Twen:Create(Icon,TweenInfo.new(0.15,Enum.EasingStyle.Quint),{
+						Twen:Create(Icon,TweenInfo.new(0.2,Enum.EasingStyle.Quint),{
 							Position = UDim2.new(0.75, 0, 0.5, 0),
-							BackgroundTransparency = 0.4
+							BackgroundTransparency = 0.1
 						}):Play()
 					else
 						Twen:Create(Icon,TweenInfo.new(0.15,Enum.EasingStyle.Quint),{
@@ -1725,7 +1784,7 @@ function Library.new(config)
 					AspectRatio = 7.65
 				}):Play();
 
-				UICorner.CornerRadius = UDim.new(0, 2)
+				UICorner.CornerRadius = UDim.new(0, 10)
 				UICorner.Parent = FunctionButton
 
 				DropShadow.Name = "DropShadow"
@@ -1778,28 +1837,39 @@ function Library.new(config)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
 
-				UIStroke.Transparency = 0.920
+				UIStroke.Transparency = 0.88
 				UIStroke.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 				UIStroke.Parent = FunctionButton
+				onAccent(function(c) UIStroke.Color = c end)
 
 				Button.MouseEnter:Connect(function()
-					Twen:Create(DropShadow,TweenInfo.new(0.2),{
-						ImageTransparency = 0.35
+					Twen:Create(DropShadow,TweenInfo.new(0.18),{
+						ImageTransparency = 0.2
 					}):Play()
-
-					Twen:Create(TextInt,TweenInfo.new(0.2),{
+					Twen:Create(TextInt,TweenInfo.new(0.18),{
 						TextTransparency = 0
+					}):Play()
+					Twen:Create(UIStroke,TweenInfo.new(0.18),{
+						Transparency = 0.5
+					}):Play()
+					Twen:Create(FunctionButton,TweenInfo.new(0.18),{
+						BackgroundTransparency = 0.6
 					}):Play()
 				end)
 
 				Button.MouseLeave:Connect(function()
-					Twen:Create(DropShadow,TweenInfo.new(0.2),{
-						ImageTransparency = 0.600
+					Twen:Create(DropShadow,TweenInfo.new(0.18),{
+						ImageTransparency = 0.55
 					}):Play()
-
-					Twen:Create(TextInt,TweenInfo.new(0.2),{
+					Twen:Create(TextInt,TweenInfo.new(0.18),{
 						TextTransparency = 0.25
+					}):Play()
+					Twen:Create(UIStroke,TweenInfo.new(0.18),{
+						Transparency = 0.88
+					}):Play()
+					Twen:Create(FunctionButton,TweenInfo.new(0.18),{
+						BackgroundTransparency = 0.8
 					}):Play()
 				end)
 
@@ -1838,7 +1908,7 @@ function Library.new(config)
 				BindEvent.Name = tostring(ctfx.Title)
 				FunctionKeybind.Name = "FunctionKeybind"
 				FunctionKeybind.Parent = Section
-				FunctionKeybind.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+				FunctionKeybind.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
 				FunctionKeybind.BackgroundTransparency = 0.800
 				FunctionKeybind.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				FunctionKeybind.BorderSizePixel = 0
@@ -1886,7 +1956,7 @@ function Library.new(config)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
 
-				UIStroke.Transparency = 0.950
+				UIStroke.Transparency = 0.88
 				UIStroke.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke.Parent = FunctionKeybind
 
@@ -1925,7 +1995,7 @@ function Library.new(config)
 				Bindkey.TextTransparency = 0.500
 				Bindkey.TextWrapped = true
 
-				UICorner_2.CornerRadius = UDim.new(0, 2)
+				UICorner_2.CornerRadius = UDim.new(0, 10)
 				UICorner_2.Parent = FunctionKeybind
 
 				local IsWIP = false;
@@ -2013,7 +2083,7 @@ function Library.new(config)
 
 				FunctionSlider.Name = "FunctionSlider"
 				FunctionSlider.Parent = Section
-				FunctionSlider.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+				FunctionSlider.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
 				FunctionSlider.BackgroundTransparency = 0.800
 				FunctionSlider.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				FunctionSlider.BorderSizePixel = 0
@@ -2047,11 +2117,11 @@ function Library.new(config)
 				UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.84, 0.25), NumberSequenceKeypoint.new(1.00, 1.00)}
 				UIGradient.Parent = TextInt
 
-				UIStroke.Transparency = 0.950
+				UIStroke.Transparency = 0.88
 				UIStroke.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke.Parent = FunctionSlider
 
-				UICorner.CornerRadius = UDim.new(0, 2)
+				UICorner.CornerRadius = UDim.new(0, 10)
 				UICorner.Parent = FunctionSlider
 
 				ValueText.Name = "ValueText"
@@ -2080,8 +2150,8 @@ function Library.new(config)
 				MFrame.Name = "MFrame"
 				MFrame.Parent = FunctionSlider
 				MFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-				MFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-				MFrame.BackgroundTransparency = 0.800
+				MFrame.BackgroundColor3 = Color3.fromRGB(6, 6, 10)
+				MFrame.BackgroundTransparency = 0.50
 				MFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				MFrame.BorderSizePixel = 0
 				MFrame.ClipsDescendants = true
@@ -2089,19 +2159,19 @@ function Library.new(config)
 				MFrame.Size = UDim2.new(0.949999988, 0, 0.289999992, 0)
 				MFrame.ZIndex = 18
 
-				UICorner_2.CornerRadius = UDim.new(0, 2)
+				UICorner_2.CornerRadius = UDim.new(1, 0)
 				UICorner_2.Parent = MFrame
 
 				TFrame.Name = "TFrame"
 				TFrame.Parent = MFrame
 				TFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-				TFrame.BackgroundTransparency = 0.500
+				TFrame.BackgroundTransparency = 0.15
 				TFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				TFrame.BorderSizePixel = 0
 				TFrame.Size = UDim2.new((slider.Default / slider.Max), 0, 1, 0)
 				TFrame.ZIndex = 17
 
-				UICorner_3.CornerRadius = UDim.new(0, 2)
+				UICorner_3.CornerRadius = UDim.new(1, 0)
 				UICorner_3.Parent = TFrame
 
 				UIStroke_2.Transparency = 0.975
@@ -2189,7 +2259,7 @@ function Library.new(config)
 
 				FunctionDropdown.Name = "FunctionDropdown"
 				FunctionDropdown.Parent = Section
-				FunctionDropdown.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+				FunctionDropdown.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
 				FunctionDropdown.BackgroundTransparency = 0.800
 				FunctionDropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				FunctionDropdown.BorderSizePixel = 0
@@ -2223,11 +2293,11 @@ function Library.new(config)
 				UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.84, 0.25), NumberSequenceKeypoint.new(1.00, 1.00)}
 				UIGradient.Parent = TextInt
 
-				UIStroke.Transparency = 0.950
+				UIStroke.Transparency = 0.88
 				UIStroke.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke.Parent = FunctionDropdown
 
-				UICorner.CornerRadius = UDim.new(0, 2)
+				UICorner.CornerRadius = UDim.new(0, 10)
 				UICorner.Parent = FunctionDropdown
 
 				MFrame.Name = "MFrame"
@@ -2361,7 +2431,7 @@ function Library.new(config)
 
 				FunctionTextbox.Name = "FunctionTextbox"
 				FunctionTextbox.Parent = Section
-				FunctionTextbox.BackgroundColor3 = Color3.fromRGB(17, 17, 17)
+				FunctionTextbox.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
 				FunctionTextbox.BackgroundTransparency = 0.800
 				FunctionTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				FunctionTextbox.BorderSizePixel = 0
@@ -2399,7 +2469,7 @@ function Library.new(config)
 				UIStroke.Color = Color3.fromRGB(255, 255, 255)
 				UIStroke.Parent = FunctionTextbox
 
-				UICorner.CornerRadius = UDim.new(0, 2)
+				UICorner.CornerRadius = UDim.new(0, 10)
 				UICorner.Parent = FunctionTextbox
 
 				MFrame.Name = "MFrame"
